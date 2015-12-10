@@ -4,20 +4,25 @@
 #endif
 #include <stdio.h>
 
-#define MAX 25
+#define MAX 50
 
-char laby[MAX][MAX] ={
-                            "1111111111111111111111111",
-                            "1                       1",
-                            "1                       1",
-                            "1                       1",
-                            "1                       1",
-                            "1                       1",
-                            "1                       1",
-                            "1                       1",
-                            "1                       1",
-                            "1111111111111111111111111"
-                    };
+char tableau[MAX][MAX] ={
+"1111111111111111111111111111111111111111111",
+"1                                         1",
+"1                                         1",
+"1                                         1",
+"1                                         1",
+"1                                         1",
+"1                                         1",
+"1                                         1",
+"1                                         1",
+"1                                         1",
+"1                                         1",
+"1                                         1",
+"1                                         1",
+"1                                         1",
+"1111111111111111111111111111111111111111111"
+};
 
 
 int MyGetch()
@@ -49,29 +54,75 @@ void Afficher(int x,int y)
         for(j=0;j<MAX;j++)
         {
             if (i==x && j==y)
-                printf("p");
+                printf(">");
             else
-                printf("%c",laby[i][j]);
+                printf("%c",tableau[i][j]);
         }
         printf("\n");
     }
 }
-
 void TryMove(int* x,int* y,int vx,int vy)
 {
-    if (laby[*x+vx][*y+vy]=='1')
+    if (tableau[*x+vx][*y+vy]=='1')
         return;
     (*x)+=vx;
     (*y)+=vy;
 }
 
+
 int main()
 {
-    int x,y;  // position joueur
+    int i;
+    int j;
+    int c;
+    int bouclefleche;
+    const int minx = 1;
+    const int maxx = 42;
+    const int miny = 1;
+    const int maxy = 14;
+    int aleatx;
+    int aleaty;
+    int x;
+    int y;// position joueur
+    int partie;
     int touche;
-    x = 5;
-    y = 11;
+
+    aleatx = 0;
+    aleaty = 0;
+    c=0;
+    bouclefleche=0;
+    partie=0;
+    x =7;
+    y = 20;
     touche = 0;
+
+    srand(time(NULL)); // initialisation de rand
+
+    aleatx = rand()%(maxx-minx)+minx;
+    aleaty = rand()%(maxy-miny)+miny;
+    tableau[aleaty][aleatx]=3;
+
+
+
+
+ while (partie==0)
+ {
+    for (i = 0; i <MAX; i++) {
+            printf("\n");
+        for(j = 0; j < MAX; j++) {
+            if (tableau[i][j]==1)
+                printf("#");
+            if (tableau[i][j]==0)
+            	printf(" ");
+            if (tableau[i][j]==2)
+            	printf("o");
+            if (tableau[i][j]==3)
+            	printf("0");
+            if (tableau[i][j]==4)
+                printf("=");
+        }
+    }
+
     while(touche!=27) // ECHAP
     {
         Afficher(x,y);
@@ -94,4 +145,5 @@ int main()
         }
     }
     return 0;
+ }
 }
